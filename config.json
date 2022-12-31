@@ -1,0 +1,11 @@
+{
+	"types": [
+		{"name": "Work", "id": "work", "time": 1500000},
+		{"name": "Short Break", "id": "shortbreak", "time": 300000},
+		{"name": "Long Break", "id": "longbreak", "time": 1800000}
+	],
+	"groups": {
+		"Stats": "#e32f29",
+		"Algebra": "#e6ac27"
+	}
+}

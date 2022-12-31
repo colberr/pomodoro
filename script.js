@@ -1,4 +1,8 @@
-var CURRENT_TYPE = "Work";
+var CONFIG = {};
+window.ipcRender.invoke("get_config", {}).then(result => {
+	CONFIG = result;
+})
+var CURRENT_TYPE = CONFIG["types"][0];
 var ACTIVE_COUTNDOWN = false;
 
 /* Sets the value on the timer
@@ -6,6 +10,7 @@ var ACTIVE_COUTNDOWN = false;
  */
 function set_timer(time) {
 	let formatted = "";
+	time = Math.floor(time / 1000);
 	if (time >= 3600) {
 		formatted = "XX:XX"
 	} else {
@@ -40,7 +45,7 @@ class Countdown {
 		this.start_pause();
 	}
 	set_timer() {
-		return set_timer(Math.floor(this.time_rem / 1000));
+		return set_timer(this.time_rem);
 	}
 	loop() {
 		const cur_time = (new Date()).getTime();
@@ -74,8 +79,17 @@ class Countdown {
 }
 
 $(document).ready(() => {
-	$("#startpause").click(() => {
+	// Set up buttons
+	CONFIG["types"].forEach(type => {
+		$("<button></button>", {
+			text: type["name"],
+			id: type["id"],
+			value: type["time"],
+			class: "type_button"
+		}).appendTo("#type_buttons");
+	})
 
+	$("#startpause").click(() => {
 		if (ACTIVE_COUTNDOWN) {
 			ACTIVE_COUTNDOWN.start_pause();
 		} else {
@@ -87,4 +101,8 @@ $(document).ready(() => {
 			);
 		}
 	});
+
+	// $("#sbreak").click(() => {
+	// 	set_timer(CONFIG["types"][2]["time"]);
+	// })
 });
