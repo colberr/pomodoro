@@ -2,7 +2,7 @@
   "name": "pomodoro",
   "version": "1.0.0",
   "description": "Simple pomodoro timer designed to include all the features I wish were on other timers",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
 	"start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"

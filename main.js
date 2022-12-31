@@ -12,16 +12,16 @@ const mb = menubar({
 		titleBarOverlay: true,
 
 		resizable: false,
-		minimizable: false
+		minimizable: false,
 	},
 	// preloadWindow: true,
 	// showOnAllWorkspaces: true,
-	windowPosition: "center"
-	// showDockIcon: false
+	windowPosition: "center",
+	// showDockIcon: false,
 });
 
 mb.on("ready", () => {
 	console.log("Menubar app is ready.");
 
-	mb.showWindow()
+	mb.showWindow();
 });
