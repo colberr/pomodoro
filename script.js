@@ -2,7 +2,7 @@ var CONFIG = {};
 window.ipcRender.invoke("get_config", {}).then(result => {
 	CONFIG = result;
 })
-var CURRENT_TYPE = CONFIG["types"][0];
+var CURRENT_TYPE = null;
 var ACTIVE_COUTNDOWN = false;
 
 /* Sets the value on the timer
@@ -31,10 +31,10 @@ function set_timer(time) {
 }
 
 class Countdown {
-	constructor(type, group, time_started, length) {
+	constructor(type, group, length) {
 		this.type = type;
 		this.group = group;
-		this.time_started = time_started;
+		this.time_started = (new Date).getTime();
 		this.overrun = 0;
 		this.time_added = 0;
 		this.time_rem = length;
@@ -80,14 +80,23 @@ class Countdown {
 
 $(document).ready(() => {
 	// Set up buttons
-	CONFIG["types"].forEach(type => {
+	CONFIG["types"].forEach((type, i) => {
 		$("<button></button>", {
 			text: type["name"],
-			id: type["id"],
-			value: type["time"],
+			// id: type["id"],
+			value: i,
 			class: "type_button"
 		}).appendTo("#type_buttons");
 	})
+
+	$(".type_button").click(e => {
+		const i = e.target.value;
+		CURRENT_TYPE = CONFIG["types"][i];
+		set_timer(CURRENT_TYPE["time"]);
+	})
+
+	// Set default type
+	var CURRENT_TYPE = CONFIG["types"][0];
 
 	$("#startpause").click(() => {
 		if (ACTIVE_COUTNDOWN) {
@@ -96,13 +105,19 @@ $(document).ready(() => {
 			ACTIVE_COUTNDOWN = new Countdown(
 				CURRENT_TYPE,
 				$("#group").val(),
-				(new Date).getTime(),
-				30 * 1000
+				CURRENT_TYPE["time"]
 			);
 		}
 	});
 
-	// $("#sbreak").click(() => {
-	// 	set_timer(CONFIG["types"][2]["time"]);
-	// })
+	$("#reset").click(() => {
+		if (ACTIVE_COUTNDOWN) {
+			if (ACTIVE_COUTNDOWN.interval) {
+				ACTIVE_COUTNDOWN.start_pause()
+			}
+
+			ACTIVE_COUTNDOWN = false;
+			set_timer(CURRENT_TYPE["time"]);
+		}
+	})
 });

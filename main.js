@@ -19,16 +19,14 @@ const mb = menubar({
 			preload: path.join(__dirname, 'preload.js')
 		},
 	},
-	// preloadWindow: true,
-	// showOnAllWorkspaces: true,
 	windowPosition: "center",
-	// showDockIcon: false,
 });
 
 mb.on("ready", () => {
 	console.log("Menubar app is ready.");
-
+	
 	mb.showWindow();
+	mb.window.openDevTools();
 });
 
 ipcMain.handle("get_config", (event, obj) => {
