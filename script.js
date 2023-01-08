@@ -17,6 +17,9 @@ function set_timer(time) {
 		if (time < 0) {
 			formatted = "-";
 			time = -time;
+			$("#timer").css("color", "red");
+		} else {
+			$("#timer").css("color", "black");
 		}
 		let mins = Math.floor(time / 60).toString();
 		let secs = (time % 60).toString();
@@ -105,7 +108,7 @@ $(document).ready(() => {
 			ACTIVE_COUTNDOWN = new Countdown(
 				CURRENT_TYPE,
 				$("#group").val(),
-				CURRENT_TYPE["time"]
+				2000 // CURRENT_TYPE["time"]
 			);
 		}
 	});
