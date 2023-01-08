@@ -16,6 +16,19 @@
 select, button {
 	-webkit-app-region: no-drag !important;
 }
+html {
+	height: 100%;
+	width: 100%;
+
+    margin: 0;
+    padding: 0;
+    border: 6px solid #e32f29;
+    overflow:hidden;
+    box-sizing: border-box;
+	border-radius: 9px;
+
+	transition: border 400ms ease-out;
+}
 #timer {
 	transition: color 500ms;
 }
@@ -23,18 +36,11 @@ select, button {
 </head>
 <body>
 	<br>
-	<select id="title">
-		<option value="Stats">Stats</option>
-		<option value="Algebra">Algebra</option>
-	</select>
+	<select id="group"></select>
 	<br>
 	<b><span id="timer">25:00</span></b>
 	<br>
-	<div id="type_buttons">
-		<!-- <button id="work">Work</button>
-		<button id="sbreak">Short Break</button>
-		<button id="lbreak">Long Break</button> -->
-	</div>
+	<div id="type_buttons"></div>
 	<br>
 	<button id="startpause">Start / Pause</button>
 	<button id="reset">Reset</button>

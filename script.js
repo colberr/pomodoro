@@ -86,7 +86,6 @@ $(document).ready(() => {
 	CONFIG["types"].forEach((type, i) => {
 		$("<button></button>", {
 			text: type["name"],
-			// id: type["id"],
 			value: i,
 			class: "type_button"
 		}).appendTo("#type_buttons");
@@ -96,6 +95,17 @@ $(document).ready(() => {
 		const i = e.target.value;
 		CURRENT_TYPE = CONFIG["types"][i];
 		set_timer(CURRENT_TYPE["time"]);
+	})
+
+	// Set up group select
+	Object.keys(CONFIG["groups"]).forEach(val => {
+		$("<option></option>", {
+			text: val,
+			value: val
+		}).appendTo("#group")
+	});
+	$("#group").change(e => {
+		$("html").css("border", `6px solid${CONFIG["groups"][e.target.value]}`);
 	})
 
 	// Set default type

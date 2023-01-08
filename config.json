@@ -6,6 +6,9 @@
 	],
 	"groups": {
 		"Stats": "#e32f29",
-		"Algebra": "#e6ac27"
+		"Algebra": "#e6ac27",
+		"Analysis": "#32e160",
+		"Numerical": "#32cae1",
+		"ODEs": "#cc5ae8"
 	}
 }
