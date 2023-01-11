@@ -5,8 +5,8 @@ const fs = require("fs");
 
 const mb = menubar({
 	browserWindow: {
-		width: 400,
-		height: 400,
+		width: 375,
+		height: 250,
 		alwaysOnTop: true,
 		
 		titleBarStyle: "hidden",

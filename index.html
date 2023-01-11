@@ -7,6 +7,7 @@
 	<title>Example app</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="script.js"></script>
+	<link rel="stylesheet" href="style.css">
 	<style>
 * {
 	user-select: none;
@@ -16,34 +17,23 @@
 select, button {
 	-webkit-app-region: no-drag !important;
 }
-html {
-	height: 100%;
-	width: 100%;
-
-    margin: 0;
-    padding: 0;
-    border: 6px solid #e32f29;
-    overflow:hidden;
-    box-sizing: border-box;
-	border-radius: 9px;
-
-	transition: border 400ms ease-out;
-}
-#timer {
-	transition: color 500ms;
-}
 	</style>
 </head>
 <body>
-	<br>
-	<select id="group"></select>
-	<br>
-	<b><span id="timer">25:00</span></b>
-	<br>
-	<div id="type_buttons"></div>
-	<br>
-	<button id="startpause">Start / Pause</button>
-	<button id="reset">Reset</button>
-	<div id="x"></div>
+	<table>
+		<tr>
+			<td colspan="6"><select id="group"></select></td>
+		</tr>
+		<tr>
+			<td colspan="6"><span id="timer">25:00</span></td>
+		</tr>
+		<tr>
+			<td colspan="3"><button id="startpause">Start / Pause</button></td>
+			<td colspan="3"><button id="reset">Reset</button></td>
+		</tr>
+		<tr id="type_buttons">
+			<!-- <td colspan="2" id="type_buttons"></td> -->
+		</tr>
+	</table>
 </body>
 </html>

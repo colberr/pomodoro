@@ -5,9 +5,9 @@
 		{"name": "Long Break", "id": "longbreak", "time": 1800000}
 	],
 	"groups": {
-		"Stats": "#e32f29",
+		"Stats": "#ef7f3e",
 		"Algebra": "#e6ac27",
-		"Analysis": "#32e160",
+		"Analysis": "#00ae2e",
 		"Numerical": "#32cae1",
 		"ODEs": "#cc5ae8"
 	}

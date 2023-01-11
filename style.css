@@ -1,0 +1,55 @@
+@font-face {
+	font-family: 'Poppins';
+	src: url('font/Poppins-Regular.ttf');
+	font-style: normal;
+	font-weight: normal;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+
+	margin: 0;
+	padding: 6px;
+	border: 6px solid #ef7f3e;
+	overflow:hidden;
+	box-sizing: border-box;
+	border-radius: 9px;
+	transition: border 500ms ease-out;
+
+	font-family: "Poppins", sans-serif;
+}
+button, select {
+	font-family: "Poppins", sans-serif;
+}
+body {
+	height: 100%;
+	width: 100%;
+
+	margin: 0;
+	padding: 0;
+}
+table {
+	height: 100%;
+	width: 100%;
+
+	table-layout: fixed;
+}
+table, tr, td {
+	margin: 0;
+	padding: 0;
+
+	text-align: center;
+}
+/* td {
+	width: 33%;
+} */
+#timer {
+	font-size: 84px;
+	font-weight: 600;
+
+	color: #ef7f3e;
+	transition: color 500ms ease-out;
+}
+
+/* https://getcssscan.com/css-buttons-examples -- button 6 */

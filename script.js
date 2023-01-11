@@ -1,9 +1,10 @@
 var CONFIG = {};
 window.ipcRender.invoke("get_config", {}).then(result => {
 	CONFIG = result;
-})
+});
 var CURRENT_TYPE = null;
-var ACTIVE_COUTNDOWN = false;
+var CURRENT_GROUP = null;
+var ACTIVE_COUNTDOWN = false;
 
 /* Sets the value on the timer
  * @param {int} time The time to display in seconds 
@@ -19,7 +20,7 @@ function set_timer(time) {
 			time = -time;
 			$("#timer").css("color", "red");
 		} else {
-			$("#timer").css("color", "black");
+			$("#timer").css("color", `${CONFIG["groups"][CURRENT_GROUP]}`);
 		}
 		let mins = Math.floor(time / 60).toString();
 		let secs = (time % 60).toString();
@@ -84,14 +85,29 @@ class Countdown {
 $(document).ready(() => {
 	// Set up buttons
 	CONFIG["types"].forEach((type, i) => {
+		let td = $("<td></td>", {
+			colspan: 2
+		});
+
 		$("<button></button>", {
 			text: type["name"],
 			value: i,
 			class: "type_button"
-		}).appendTo("#type_buttons");
+		}).appendTo(td)
+		
+		td.appendTo("#type_buttons");
 	})
 
 	$(".type_button").click(e => {
+		if (ACTIVE_COUNTDOWN) {
+			if (ACTIVE_COUNTDOWN.interval) {
+				ACTIVE_COUNTDOWN.start_pause()
+			}
+
+			// ** log session info
+			ACTIVE_COUNTDOWN = false;
+		}
+
 		const i = e.target.value;
 		CURRENT_TYPE = CONFIG["types"][i];
 		set_timer(CURRENT_TYPE["time"]);
@@ -105,31 +121,38 @@ $(document).ready(() => {
 		}).appendTo("#group")
 	});
 	$("#group").change(e => {
-		$("html").css("border", `6px solid${CONFIG["groups"][e.target.value]}`);
+		CURRENT_GROUP = e.target.value;
+		$("html").css("border", `6px solid ${CONFIG["groups"][CURRENT_GROUP]}`);
+		$("#timer").css("color", `${CONFIG["groups"][CURRENT_GROUP]}`);
+
+		if (ACTIVE_COUNTDOWN) {
+			ACTIVE_COUNTDOWN.group = CURRENT_GROUP;
+		}
 	})
 
 	// Set default type
 	var CURRENT_TYPE = CONFIG["types"][0];
 
 	$("#startpause").click(() => {
-		if (ACTIVE_COUTNDOWN) {
-			ACTIVE_COUTNDOWN.start_pause();
+		if (ACTIVE_COUNTDOWN) {
+			ACTIVE_COUNTDOWN.start_pause();
 		} else {
-			ACTIVE_COUTNDOWN = new Countdown(
+			ACTIVE_COUNTDOWN = new Countdown(
 				CURRENT_TYPE,
-				$("#group").val(),
-				2000 // CURRENT_TYPE["time"]
+				CURRENT_GROUP,
+				CURRENT_TYPE["time"]
 			);
 		}
 	});
 
 	$("#reset").click(() => {
-		if (ACTIVE_COUTNDOWN) {
-			if (ACTIVE_COUTNDOWN.interval) {
-				ACTIVE_COUTNDOWN.start_pause()
+		if (ACTIVE_COUNTDOWN) {
+			if (ACTIVE_COUNTDOWN.interval) {
+				ACTIVE_COUNTDOWN.start_pause()
 			}
 
-			ACTIVE_COUTNDOWN = false;
+			// ** log session info
+			ACTIVE_COUNTDOWN = false;
 			set_timer(CURRENT_TYPE["time"]);
 		}
 	})
