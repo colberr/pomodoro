@@ -122,8 +122,10 @@ $(document).ready(() => {
 	});
 	$("#group").change(e => {
 		CURRENT_GROUP = e.target.value;
-		$("html").css("border", `6px solid ${CONFIG["groups"][CURRENT_GROUP]}`);
-		$("#timer").css("color", `${CONFIG["groups"][CURRENT_GROUP]}`);
+		const hex = CONFIG["groups"][CURRENT_GROUP];
+		$("html").css("border", `6px solid ${hex}`);
+		$("#timer").css("color", `${hex}`);
+		$(".colour-match").css("filter", getFilter(hex));
 
 		if (ACTIVE_COUNTDOWN) {
 			ACTIVE_COUNTDOWN.group = CURRENT_GROUP;
@@ -131,7 +133,11 @@ $(document).ready(() => {
 	})
 
 	// Set default type
-	var CURRENT_TYPE = CONFIG["types"][0];
+	CURRENT_TYPE = CONFIG["types"][0];
+	CURRENT_GROUP = Object.keys(CONFIG["groups"])[0];
+
+	// Set initial colour of icons
+	$(".colour-match").css("filter", getFilter(CONFIG["groups"][CURRENT_GROUP]));
 
 	$("#startpause").click(() => {
 		if (ACTIVE_COUNTDOWN) {

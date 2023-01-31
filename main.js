@@ -11,6 +11,7 @@ const mb = menubar({
 		
 		titleBarStyle: "hidden",
 		titleBarOverlay: true,
+		trafficLightPosition: {x: 10, y: 10},
 
 		resizable: false,
 		minimizable: false,

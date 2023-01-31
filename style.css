@@ -29,6 +29,22 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+.colour-match {
+	cursor: pointer;
+	transition: filter 500ms ease-out;
+}
+#settings {
+	background-image: url("img/settings.png");
+	background-size: contain;
+	height: 20px;
+	width: 20px;
+
+	position: fixed;
+	top: 14px;
+	right: 14px;
+}
+
 table {
 	height: 100%;
 	width: 100%;
@@ -51,5 +67,26 @@ table, tr, td {
 	color: #ef7f3e;
 	transition: color 500ms ease-out;
 }
+
+#timer-btn-cont {
+	margin: auto;
+}
+#startpause {
+	background-image: url("img/play.png");
+}
+#reset {
+	background-image: url("img/reset.png");
+}
+.timer-button {
+	background-size: contain;
+	display: inline-block;
+	margin: auto 5px;
+
+	height: 24px;
+	width: 24px;
+}
+
+
+
 
 /* https://getcssscan.com/css-buttons-examples -- button 6 */
