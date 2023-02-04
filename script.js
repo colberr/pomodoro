@@ -180,4 +180,9 @@ $(document).ready(async () => {
 			set_timer(CURRENT_TYPE["time"]);
 		}
 	})
+
+	// Settings button
+	$("#settings").click(() => {
+		window.ipcRender.invoke("show_menu", {});
+	})
 });

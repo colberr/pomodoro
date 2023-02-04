@@ -1,4 +1,4 @@
-const { app, ipcMain } = require("electron");
+const { app, ipcMain, Menu } = require("electron");
 const { menubar } = require("menubar");
 const path = require("path");
 const fs = require("fs");
@@ -30,7 +30,25 @@ mb.on("ready", () => {
 	mb.window.openDevTools();
 });
 
-ipcMain.handle("get_config", (event, obj) => {
+ipcMain.handle("get_config", () => {
 	let config = JSON.parse(fs.readFileSync("config.json"));
 	return config;
 });
+
+ipcMain.handle("show_menu", () => {
+	const template = [
+		{
+			label: "Menu Item 1",
+			click: () => { console.log("hello") }
+		},
+		{type: "separator"},
+		{ 
+			label: "Menu Item 2",
+			type: "checkbox",
+			checked: true
+		}
+	];
+	const menu = Menu.buildFromTemplate(template);
+
+	menu.popup({window: mb.window, x: 375 - 34, y: 40});
+})
