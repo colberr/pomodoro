@@ -15,7 +15,7 @@
 	-webkit-app-region: drag;
 	-webkit-user-select: none;
 }
-select, button {
+select, button, input, input::-webkit-slider-thumb {
 	-webkit-app-region: no-drag !important;
 }
 	</style>
@@ -29,6 +29,11 @@ select, button {
 		<tr>
 			<td colspan="6"><span id="timer">25:00</span></td>
 		</tr>
+		<tr id="slider-row">
+			<td colspan="6">
+				<input id="slider" type="range" min="0" max="10" value="0">
+			</td>
+		</tr>
 		<tr>
 			<td colspan="6">
 				<div id="timer-btn-cont">
@@ -37,9 +42,9 @@ select, button {
 				</div>
 			</td>
 		</tr>
-		<tr id="type_buttons">
-			<!-- <td colspan="2" id="type_buttons"></td> -->
-		</tr>
+		<!-- <tr id="type_buttons">
+			<td colspan="2" id="type_buttons"></td>
+		</tr> -->
 	</table>
 </body>
 </html>

@@ -1,7 +1,4 @@
 var CONFIG = {};
-window.ipcRender.invoke("get_config", {}).then(result => {
-	CONFIG = result;
-});
 var CURRENT_TYPE = null;
 var CURRENT_GROUP = null;
 var ACTIVE_COUNTDOWN = false;
@@ -39,13 +36,15 @@ class Countdown {
 		this.type = type;
 		this.group = group;
 		this.time_started = (new Date).getTime();
+		this.length = length;
+		this.time_rem = length;
 		this.overrun = 0;
 		this.time_added = 0;
-		this.time_rem = length;
 		this.pause_resumes = [];
 
 		this.interval = null;
 
+		$("#slider").prop("max", Math.round(length / 1000));
 		this.start_pause();
 	}
 	set_timer() {
@@ -59,6 +58,10 @@ class Countdown {
 		this.set_timer();
 
 		this.prev_time = cur_time;
+
+		if (!$("#slider").is(":active")) {
+			$("#slider").val(Math.round((this.length - this.time_rem) / 1000));
+		}
 	}
 	start_pause() {
 		// Get current time
@@ -68,11 +71,13 @@ class Countdown {
 		if (this.interval) {
 			clearInterval(this.interval);
 			this.interval = null;
+			$("#startpause").css("background-image", "url('img/play.png')");
 		} else {
 			this.prev_time = cur_time;
 			this.interval = setInterval(() => {
 				this.loop()
 			}, 100);
+			$("#startpause").css("background-image", "url('img/pause.png')");
 		}
 
 		// Push time to array (except on initial start)
@@ -82,8 +87,11 @@ class Countdown {
 	}
 }
 
-$(document).ready(() => {
-	// Set up buttons
+$(document).ready(async () => {
+	// Read config file
+	CONFIG = await window.ipcRender.invoke("get_config", {});
+
+	// Set up type buttons
 	CONFIG["types"].forEach((type, i) => {
 		let td = $("<td></td>", {
 			colspan: 2
@@ -125,6 +133,7 @@ $(document).ready(() => {
 		const hex = CONFIG["groups"][CURRENT_GROUP];
 		$("html").css("border", `6px solid ${hex}`);
 		$("#timer").css("color", `${hex}`);
+		$("#slider::-webkit-slider-thumb").css("color", `${hex}`);
 		$(".colour-match").css("filter", getFilter(hex));
 
 		if (ACTIVE_COUNTDOWN) {
@@ -139,6 +148,7 @@ $(document).ready(() => {
 	// Set initial colour of icons
 	$(".colour-match").css("filter", getFilter(CONFIG["groups"][CURRENT_GROUP]));
 
+	// Start/ pause button
 	$("#startpause").click(() => {
 		if (ACTIVE_COUNTDOWN) {
 			ACTIVE_COUNTDOWN.start_pause();
@@ -151,6 +161,7 @@ $(document).ready(() => {
 		}
 	});
 
+	// Reset button
 	$("#reset").click(() => {
 		if (ACTIVE_COUNTDOWN) {
 			if (ACTIVE_COUNTDOWN.interval) {

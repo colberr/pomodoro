@@ -12,7 +12,7 @@ html {
 	margin: 0;
 	padding: 6px;
 	border: 6px solid #ef7f3e;
-	overflow:hidden;
+	overflow: hidden;
 	box-sizing: border-box;
 	border-radius: 9px;
 	transition: border 500ms ease-out;
@@ -57,15 +57,45 @@ table, tr, td {
 
 	text-align: center;
 }
-/* td {
-	width: 33%;
-} */
+
+select {
+	min-width: 120px;
+	text-align: center;
+}
+
 #timer {
 	font-size: 84px;
 	font-weight: 600;
 
 	color: #ef7f3e;
 	transition: color 500ms ease-out;
+
+	line-height: 68px;
+}
+
+#slider {
+	appearance: none;
+	-webkit-appearance: none;
+
+	height: 3px;
+	width: 100%;
+
+	background: #d3d3d380;
+	border-radius: 5px;
+	outline: none;
+
+	margin: auto;
+}
+#slider::-webkit-slider-thumb {
+	appearance: none;
+	-webkit-appearance: none;
+
+	width: 12px;
+	height: 12px;
+
+	background: #ef7f3e;
+	border-radius: 50%;
+	cursor: pointer;
 }
 
 #timer-btn-cont {
