@@ -32,7 +32,7 @@ body {
 
 .colour-match {
 	cursor: pointer;
-	transition: filter 500ms ease-out;
+	/* transition: filter 500ms ease-out; */
 }
 #settings {
 	background-image: url("img/settings.png");
@@ -68,7 +68,7 @@ select {
 	font-weight: 600;
 
 	color: #ef7f3e;
-	transition: color 500ms ease-out;
+	transition: color 300ms ease-out;
 
 	line-height: 68px;
 }
@@ -93,7 +93,7 @@ select {
 	width: 12px;
 	height: 12px;
 
-	background: #ef7f3e;
+	/* background: #ef7f3e; */
 	border-radius: 50%;
 	cursor: pointer;
 }

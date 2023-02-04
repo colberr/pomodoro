@@ -91,6 +91,10 @@ $(document).ready(async () => {
 	// Read config file
 	CONFIG = await window.ipcRender.invoke("get_config", {});
 
+	// Set defaults
+	CURRENT_TYPE = CONFIG["types"][0];
+	CURRENT_GROUP = Object.keys(CONFIG["groups"])[0];
+
 	// Set up type buttons
 	CONFIG["types"].forEach((type, i) => {
 		let td = $("<td></td>", {
@@ -105,7 +109,6 @@ $(document).ready(async () => {
 		
 		td.appendTo("#type_buttons");
 	})
-
 	$(".type_button").click(e => {
 		if (ACTIVE_COUNTDOWN) {
 			if (ACTIVE_COUNTDOWN.interval) {
@@ -121,29 +124,33 @@ $(document).ready(async () => {
 		set_timer(CURRENT_TYPE["time"]);
 	})
 
-	// Set up group select
-	Object.keys(CONFIG["groups"]).forEach(val => {
+	// Set up group select & class to colour slider circle
+	var thumb_classes = "";
+	for (const [name, col] of Object.entries(CONFIG["groups"])) {
 		$("<option></option>", {
-			text: val,
-			value: val
-		}).appendTo("#group")
-	});
+			text: name,
+			value: name
+		}).appendTo("#group");
+		
+		thumb_classes += `#slider.${name}::-webkit-slider-thumb {background: ${col}} `;
+	}
+	$("<style>" + thumb_classes + "</style>").appendTo("head");
+	$("#slider").addClass(CURRENT_GROUP);
+
 	$("#group").change(e => {
+		$("#slider").removeClass(CURRENT_GROUP);
 		CURRENT_GROUP = e.target.value;
+
 		const hex = CONFIG["groups"][CURRENT_GROUP];
 		$("html").css("border", `6px solid ${hex}`);
 		$("#timer").css("color", `${hex}`);
-		$("#slider::-webkit-slider-thumb").css("color", `${hex}`);
 		$(".colour-match").css("filter", getFilter(hex));
+		$("#slider").addClass(CURRENT_GROUP);
 
 		if (ACTIVE_COUNTDOWN) {
 			ACTIVE_COUNTDOWN.group = CURRENT_GROUP;
 		}
 	})
-
-	// Set default type
-	CURRENT_TYPE = CONFIG["types"][0];
-	CURRENT_GROUP = Object.keys(CONFIG["groups"])[0];
 
 	// Set initial colour of icons
 	$(".colour-match").css("filter", getFilter(CONFIG["groups"][CURRENT_GROUP]));
